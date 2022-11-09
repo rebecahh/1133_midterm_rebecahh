@@ -8,6 +8,9 @@ let numBalls_3 = 130;
 let bgColor1 = 0;
 let bgColor2 = 255;
 let specialBall;
+// scene2
+let people = [];
+let numPeople = 50;
 
 function setup() {
   noStroke();
@@ -22,15 +25,20 @@ function setup() {
   for (k = 0; k < numBalls_3; k++) {
     balls_3[k] = new Ball(random(width), random(height), 20, random(5, 20), random(255), random(255), random(255), 50);
   }
+  // scene2
+  for (l = 0; l < numPeople; l++) {
+    people[l] = new Person(random(width), random(height), 5, 8, random(255), random(255), random(255));
+  }
 }
 
 function draw() {
   if (millis() < 15000) {
     scene1();
   }
-
+  if (millis() > 15000 && millis() < 30000) {
+    scene2();
+  }
 }
-
 function scene1() {
   // scene1
   if (millis() < 5000) {
@@ -69,10 +77,31 @@ function scene1() {
   // fade to white
   if (millis() > 13000 && millis() < 15000) {
     background(bgColor1);
-    bgColor1+=5;
+    bgColor1 += 5;
   }
 }
-
+function scene2() {
+  if (millis() > 15000 && millis() < 18000) {
+    background(bgColor2);
+    specialPerson = new Person(width / 2, height / 2, 0, 0, 0, 0, 0, 100);
+    specialPerson.display();
+    for (let p = 0; p < people.length; p++) {
+      people[p].move();
+      people[p].display();
+    }
+  }
+  if (millis() > 18000 && millis() < 30000) {
+    background(bgColor2);
+    specialPerson = new Person(width / 2, height / 2, 0, 0, 0, 0, 0, 100);
+    specialPerson.display();
+    for (let p = 0; p < people.length; p++) {
+      people[p].move();
+      people[p].display();
+    }
+    // fade to black
+    bgColor2--;
+  }
+}
 //scene1
 class Ball {
   constructor(x, y, xIncr, yIncr, r, g, b, size) {
@@ -99,5 +128,46 @@ class Ball {
   display() {
     fill(this.r, this.g, this.b);
     circle(this.x, this.y, this.size);
+  }
+}
+class Person {
+  constructor(x, y, xIncr, yIncr, r, g, b) {
+    this.x = x;
+    this.y = y;
+    this.xIncr = xIncr;
+    this.yIncr = yIncr;
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+  move() {
+    this.x += random(-this.xIncr, this.xIncr);
+    if (this.x < 0 || this.x > width) {
+      this.x = width / 2;
+    }
+    this.y += random(-this.yIncr, this.yIncr);
+    if (this.y < 0 || this.y > height) {
+      this.y = height / 2;
+    }
+  }
+  display() {
+    fill(this.r, this.g, this.b);
+    stroke(this.r, this.g, this.b);
+    circle(this.x, this.y, 50);
+    ellipse(this.x, this.y + 60, 50, 80);
+    // rect(this.x-25,this.y+25,50,60);
+    strokeWeight(10);
+    line(this.x, this.y + 25, this.x - 50, this.y + 50);
+    line(this.x, this.y + 25, this.x + 50, this.y + 50);
+    line(this.x - 15, this.y + 50, this.x - 15, this.y + 115);
+    line(this.x + 15, this.y + 50, this.x + 15, this.y + 115);
+    fill(0, 0, 0);
+    circle(this.x - 10, this.y - 10, 15);
+    circle(this.x + 10, this.y - 10, 15);
+    strokeWeight(5);
+    stroke(0, 0, 0);
+    noFill();
+    arc(this.x, this.y, width / 50, height / 50, 0, PI)
+    // arc(150, 110, 200, 200, 120, 103);
   }
 }
