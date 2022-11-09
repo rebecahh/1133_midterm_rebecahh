@@ -11,6 +11,11 @@ let specialBall;
 // scene2
 let people = [];
 let numPeople = 50;
+// scene3
+// let angle = 0;
+// let r = 200;
+// let stars = [];
+// let numStars = 50;
 
 function setup() {
   noStroke();
@@ -27,8 +32,13 @@ function setup() {
   }
   // scene2
   for (l = 0; l < numPeople; l++) {
-    people[l] = new Person(random(width), random(height), 5, 8, random(255), random(255), random(255));
+    people[l] = new Person(random(width), random(height), 5, 8, random(200), random(200), random(200));
   }
+  // for (m=0;m<numStars;m++){
+  //   let x = random(0,width);
+  //   let y = x/2;
+  //   stars[m] = new Star(x,y);
+  // }
 }
 
 function draw() {
@@ -38,7 +48,21 @@ function draw() {
   if (millis() > 15000 && millis() < 30000) {
     scene2();
   }
+  // if (millis() > 30000 && millis () < 45000){
+  //   scene3();
+  // }
+  if (millis() > 30000){
+    background(0);
+  }
+  // background(0);
+  // if (millis() < 100) {
+  //   background(0);
+  // }
+  // if (millis() < 15000) {
+  //   scene3();
+  // }
 }
+
 function scene1() {
   // scene1
   if (millis() < 5000) {
@@ -102,6 +126,18 @@ function scene2() {
     bgColor2--;
   }
 }
+// Coding Train Polar Coordinates
+// function scene3() {
+//   // background(150);
+//   // if (millis() > 45000 && millis() < 47000) {
+//   if (millis() < 1000) {
+//     stroke(244, 255, 181);
+//     strokeWeight(4);
+//     for (i=0;i<stars.length;i++){
+//       stars[i].display();
+//     }
+//   }
+// }
 //scene1
 class Ball {
   constructor(x, y, xIncr, yIncr, r, g, b, size) {
@@ -171,3 +207,17 @@ class Person {
     // arc(150, 110, 200, 200, 120, 103);
   }
 }
+// class Star {
+//   constructor(x, y) {
+//     this.x = x;
+//     this.y = y;
+//   }
+//   display() {
+//     translate(width/2,height/2);
+//     let x = r * cos(angle);
+//     let y = r * sin(angle);
+//     point(x, y);
+//     angle += 2;
+//     r -= 0.1;
+//   }
+// }
